@@ -1,0 +1,6 @@
+// // lek 472
+// export const stripe = {
+//   charges: {
+//     create: jest.fn().mockResolvedValue({}),
+//   },
+// };

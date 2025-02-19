@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  # liczba kapsuł
+  replicas: 1
+  # selektor z etykietami dopasowania i aplikacją wyłączoną.
+  # Celem tego selektora tutaj będzie poinformowanie wdrożenia,
+  # jak znaleźć wszystkie pods, które ma utworzyć.
+  selector:
+    matchLabels:
+      app: auth
+  # ten szablon tutaj pokazuje, jak utworzyć każdy pojedynczy pod,
+  # który zostanie utworzony w tym wdrożeniu
+  template:
+    metadata:
+      labels:
+        app: auth
+    # to wskaże kapsule, jak ma się zachowywać.
+    spec:
+      containers:
+        # myślnik określa że to będzie wpis w tablicy
+        - name: auth
+          # obraz do użycia, który będzie identyfikatorem Docker ID.
+          image: kreative358/auth
+# gdy tworzymy wdrożenie, tworzymy usługę, która będzie z nim powiązana.
+# Jest to usługa Kubernetes, coś pozwala nam uzyskać dostęp do kapsuły.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

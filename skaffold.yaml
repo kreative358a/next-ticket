@@ -1,0 +1,68 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+# deploy:
+#   kubectl:
+#     manifests:
+#       - ./infra/k8s/*
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: next-ticet
+  artifacts:
+    # - image: us.gcr.io/next-ticet/auth
+    - image: kreative358/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # - image: us.gcr.io/next-ticet/client
+    - image: kreative358/next-ticket-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: kreative358/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # lek 353
+    - image: kreative358/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # lek 434
+    - image: kreative358/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # lek 454
+    - image: kreative358/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
