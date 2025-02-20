@@ -7,6 +7,8 @@ kind: Config
 manifests:
   rawYaml:
     - ./infra/k8s/*
+    # lek 523
+    - ./infra/k8s-dev/*
 build:
   local:
     push: false
