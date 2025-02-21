@@ -9,11 +9,11 @@ import {
   BadRequestError, // lek 432
   OrderStatus,
 } from "@next-ticket/common";
-import { Ticket } from "../models/ticket";
+import { Ticket } from "../../models/ticket";
 
 // lek 342
-import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
-import { natsWrapper } from "../nats-wrapper";
+import { TicketUpdatedPublisher } from "../../events/publishers/ticket-updated-publisher";
+import { natsWrapper } from "../../nats-wrapper";
 
 const router = express.Router();
 
@@ -40,7 +40,7 @@ const router = express.Router();
 
 router.put(
   // "/api/tickets/:id",
-  "/api/tickets/:id",
+  "/api/tickets/:id/update",
   requireAuth,
   [
     body("title").not().isEmpty().withMessage("Title is required"),

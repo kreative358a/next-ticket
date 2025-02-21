@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import UpdateTicket from "../../components/update-ticket";
 import { AppContext, AppProps, AppInitialProps } from "next/app";
@@ -32,6 +32,9 @@ const OwnerTicketIndex = ({
   currentUser: CurrentUserProps;
 }) => {
   const [myTickets, setMyTickets] = useState<TicketProps[]>([]);
+  // const [title, setTitle] = useState();
+  // const [price, setPrice] = useState();
+
   // const router = useRouter();
 
   // Router.push("/");
@@ -64,6 +67,18 @@ const OwnerTicketIndex = ({
       </p>
       <ul style={{ fontSize: "16px" }}>
         {myTickets.map((ticket) => {
+          // function handleSubmit(ticketDetails: any) {
+          //   post("some-url", {
+          //     ticketDetails
+          //   });
+          //   setTitle(ticketDetails.title);
+          //   setPrice(ticketDetails.price);
+          // }
+          // function post(url:string, data:any) {
+          //   // Imagine this sends a request...
+          //   console.log("POST /" + url);
+          //   console.log(data);
+          // }
           return (
             <li
               key={ticket.id}
@@ -82,13 +97,16 @@ const OwnerTicketIndex = ({
               {ticket.orderId ? (
                 ""
               ) : (
-                // <Link
-                //   className="nav-link"
-                //   href={`/tickets/update/${ticket.id}`}
-                // >
-                //   update
-                // </Link>
-                <UpdateTicket ticket={ticket} />
+                <>
+                  <Link
+                    className="nav-link"
+                    // href={`/tickets/update/${ticket.id}`}
+                    href={`/tickets/${ticket.id}/update`}
+                  >
+                    update
+                  </Link>
+                  <UpdateTicket ticket={ticket} />
+                </>
               )}
             </li>
           );
@@ -106,3 +124,6 @@ OwnerTicketIndex.getInitialProps = async (context: AppContext, client: any) => {
 };
 
 export default OwnerTicketIndex;
+function post(arg0: { ticketDetails: any }) {
+  throw new Error("Function not implemented.");
+}
