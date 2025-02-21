@@ -10,7 +10,6 @@ console.clear();
 
 // stan to rzeczywista instancja lub klient,
 // którego używamy do łączenia się z serwerem Nat streaming.
-// const stan = nats.connect('ticketing', 'abc', {
 // const stan = nats.connect('next-ticket', 'abc', {
 //   url: 'http://localhost:4222',
 // });

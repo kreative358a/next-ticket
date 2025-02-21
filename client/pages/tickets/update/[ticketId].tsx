@@ -1,56 +1,38 @@
-// // lek 484
-// const NewTicket = () => {
-//   return (
-//     <div
-//       style={{
-//         width: "60%",
-//         minWidth: "400px",
-//         position: "relative",
-//         margin: "20px auto 20px auto",
-//       }}
-//     >
-//       <h1>Create a Ticket</h1>
-//       <form>
-//         <div className="form-group">
-//           <label>Title</label>
-//           <input className="form-control" />
-//         </div>
-//         <div className="form-group">
-//           <label>Price</label>
-//           <input className="form-control" />
-//         </div>
-//         <button className="btn btn-primary">Submit</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default NewTicket;
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import useRequest from "../../hooks/use-request"; // lek 488
+import useRequest from "../../../hooks/use-request"; // lek 488
 import Router from "next/router"; // lek 489
 
-const NewTicket = () => {
+interface Ticket {
+  id: string;
+  title: string;
+  price: number | string | any;
+  userId: string;
+  version: number; // lek 399
+  orderId?: string; // lek 422
+}
+
+const UpdateTicket = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+  const [ticketId, setTicketId] = useState("");
 
   // lek 488
   const { doRequest, errors } = useRequest({
-    url: "/api/tickets",
-    method: "post",
+    url: `/api/tickets/${ticketId}`,
+    method: "put",
     body: {
       title,
       price,
     },
-    onSuccess: (ticket) => {
+    onSuccess: (ticket: Ticket) => {
       console.log(ticket);
-      Router.push("/");
+      Router.push("/tickets");
     },
   });
 
   // lek 488
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     doRequest();
@@ -111,4 +93,4 @@ const NewTicket = () => {
   );
 };
 
-export default NewTicket;
+export default UpdateTicket;

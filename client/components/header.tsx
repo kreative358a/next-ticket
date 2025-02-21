@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 
-export default ({ currentUser }) => {
+export default function Header({ currentUser }: { currentUser: any }) {
   const links = [
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
-    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "Create Tickets", href: "/tickets/new" },
     currentUser && { label: "My Orders", href: "/orders" },
+    currentUser && { label: "My Tickets", href: "/tickets" },
     currentUser && { label: "Sign Out", href: "/auth/signout" },
   ]
     .filter((linkConfig) => linkConfig)
@@ -29,8 +31,10 @@ export default ({ currentUser }) => {
       </Link>
 
       <div className="d-flex justify-content-end">
-        <ul className="nav d-flex align-items-center">{links}</ul>
+        <ul className="nav d-flex align-items-center">
+          {currentUser ? currentUser.email : "Guest"} {links}
+        </ul>
       </div>
     </nav>
   );
-};
+}

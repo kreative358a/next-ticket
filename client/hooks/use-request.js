@@ -17,9 +17,14 @@ export default ({ url, method, body, onSuccess }) => {
       if (onSuccess) {
         onSuccess(response.data);
       }
-
+      console.log("use-request response.data: ", response.data);
       return response.data;
     } catch (err) {
+      console.log("use-request use-request err: ", err);
+      console.log(
+        "use-request err.response.data.errors: ",
+        err.response.data.errors
+      );
       setErrors(
         <div className="alert alert-danger">
           <h4>Ooops....</h4>
